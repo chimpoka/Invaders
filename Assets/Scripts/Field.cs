@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    public int width = 10;
-    public int height = 10;
 
-	void Start ()
+
+    public static Field Create(int width, int height)
     {
-        Vector3 scale = transform.localScale;
+        GameObject field = Instantiate(Resources.Load("Prefabs/Field") as GameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        Vector3 scale = field.transform.localScale;
         scale.x = (float)width / 10;
         scale.z = (float)height / 10;
-        transform.localScale = scale;
+        field.transform.localScale = scale;
 
         Vector2 textureScale = new Vector2(width, height);
-        GetComponent<Renderer>().material.mainTextureScale = textureScale;
-    }
-	
+        field.GetComponent<Renderer>().material.mainTextureScale = textureScale;
 
-	void Update ()
-    {
-		
-	}
+        return field.gameObject.GetComponent<Field>();
+    }
 }
